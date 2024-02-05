@@ -73,7 +73,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" onsubmit="signup(event)">
+                        <form onsubmit="signup(event)">
                             <label for="name">Enter name:</label>
                             <input type="text" name="name" required>
                             <label for="email"> Enter email: </label>
@@ -103,35 +103,35 @@
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
     
-
+    
     <script>
-        function signup(event){
-            event.preventDefault();
-            const name = event.target.name.value;
-            const email = event.target.email.value;
-            const phonenumber = event.target.phonenumber.value;
-            const password = event.target.password.value;
+      function signup(event){
+        event.preventDefault();
+        const name = event.target.name.value;
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+        
+        const obj = {
+          name,
+          email,
+          phonenumber,
+          password
+        };
+        axios.post("http://localhost:3000/signup",obj)
+        .then((response)=>{
+          alert("You are successfully registered with us. You can login now.")
+          window.location.assign("/login");
 
-            const obj = {
-                name,
-                email,
-                phonenumber,
-                password,
-            };
-       
-        axios.post("http://localhost:2000/signup",obj).then((response) => {
-            alert("You are successfully registered with us. You can login now.")
-            window.location.assign("/login");
         })
         .catch((err) => {
-            console.log(err)
-            if(err.response.status===400){
-                alert("Please fill all the fields.")
-            }else{
-                alert("This mail id already exists. So please try with a different mail id")
-            }
+          console.log(err)
+          if (err.response.status===400){
+            alert("Please fill all the fields.")
+          }else{
+            alert("This mail id already exists. So please try with a different mail id.")
+          }
         })
-    }
+      }
     </script>
-    </body>
-    </html>
+</body>
+</html>
